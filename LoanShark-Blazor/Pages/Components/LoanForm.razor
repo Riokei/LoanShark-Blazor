@@ -1,0 +1,62 @@
+﻿<div class="">
+    <div class="form-group">
+        <div class="col">
+            <p>Input loan amount:</p>
+            <input type="number"
+                   class="form-control my-2"
+                   placeholder="Input loan amount here.."
+                   @bind-value="AmountToCalculate" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col">
+            <p>Input interest rate:</p>
+            <input type="number"
+                   class="form-control my-2"
+                   placeholder="Input interest rate here.."
+                   @bind-value="RateToCalculate" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <p>Input how many months:</p>
+            <input type="number"
+                   class="form-control my-2"
+                   placeholder="Input how many months here.."
+                   @bind-value="TermToCalculate" />
+        </div>
+    </div>
+    <button
+        type="button"
+        class="btn btn-success input-group-text"
+        @onclick="OnCalculate">Calculate</button>
+
+</div>
+
+@code {
+    private decimal AmountToCalculate { get; set; } = 0;
+    private decimal RateToCalculate { get; set; } = 0;
+    private int TermToCalculate { get; set; } = 0;    
+    private string Set { get; set; } = "true";
+
+    [Parameter]
+    public EventCallback<decimal> CalculationAmount { get; set; }
+    [Parameter]
+    public EventCallback<decimal> CalculationRate { get; set; }
+    [Parameter]
+    public EventCallback<int> CalculationTerm { get; set; }
+    [Parameter]
+    public EventCallback<string> RunEverything { get; set; }
+
+    private void OnCalculate()
+    {
+        
+        CalculationAmount.InvokeAsync(AmountToCalculate);
+        CalculationRate.InvokeAsync(RateToCalculate);
+        CalculationTerm.InvokeAsync(TermToCalculate);
+        RunEverything.InvokeAsync(Set);
+    }
+
+    
+}   

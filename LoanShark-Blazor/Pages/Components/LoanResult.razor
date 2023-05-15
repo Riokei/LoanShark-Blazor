@@ -1,0 +1,33 @@
+﻿<h2 class="text-center">LoanResult</h2>
+@if (Amount != 0) {
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Your Monthly Payments</h2>
+        </div>
+        <div class="col-12">
+            <h1>$@Payment.ToString("0.00")</h1>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-6"><h4>Total Principal</h4></div><div class="col-6"><h3>$@Amount</h3></div>
+    </div>
+    <div class="row">
+            <div class="col-6"><h4>Total Interest</h4></div><div class="col-6"><h3>$@TotalRate.ToString("0.00")</h3></div>
+    </div>
+    <div class="row">
+            <div class="col-6"><h4>Total Cost</h4></div><div class="col-6"><h3>$@TotalAmount.ToString("0.00")</h3></div>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter]
+    public decimal Amount { get; set; } = 0;
+    [Parameter]
+    public decimal TotalAmount { get; set; } = 0;
+    [Parameter]
+    public decimal TotalRate { get; set; } = 0;
+    [Parameter]
+    public decimal Payment { get; set; } = 0;
+}

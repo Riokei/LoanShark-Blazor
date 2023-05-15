@@ -1,0 +1,60 @@
+﻿@page "/"
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <LoanForm CalculationAmount="AmountCalc" CalculationRate="RateCalc" CalculationTerm="TermCalc" RunEverything="BoolChanged"></LoanForm>
+        </div>
+        <div class="col-6">
+            <LoanResult Amount="loan.Amount" TotalAmount="loan.TotalAmount" TotalRate="loan.TotalRate" Payment="loan.Payment"></LoanResult>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <LoanTable PaymentTable="loanTable"></LoanTable>
+        </div>
+    </div>
+</div>
+@code {
+    private Loan loan = new()
+    {
+        Payment = 0,
+        TotalRate = 0,
+        TotalAmount = 0,
+        Amount = 0,
+        Rate = 0,
+        Term = 0
+    };
+    private List<LoanPayment> loanTable = new();
+    private string Change = string.Empty;
+    private void AmountCalc (decimal Amount)
+    {
+        loan.Amount = Amount;
+    }
+    private void RateCalc (decimal Rate)
+    {
+        loan.Rate = Rate;
+    }
+    private void TermCalc (int Term)
+    {
+        loan.Term = Term; 
+    }
+    private void BoolChanged (string Change)
+    {
+        this.Change = Change;
+        if (Change.Equals("true"))
+        {
+            doStuff(loan, loanTable);
+        }
+    }
+    private void doStuff(Loan model, List<LoanPayment> table)
+    {
+        LoanService loanService = new();
+        model = loanService.GetPayments(model);
+        table = model.loanPayments;
+        loan = model;
+        loanTable = table;        
+    }
+
+
+    
+}
